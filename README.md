@@ -11,8 +11,13 @@
 - Docker Compose: [Установить Docker Compose](https://docs.docker.com/compose/install/)
 
 ❇️ При получении списка people использовать пагинацию
+
 ❇️ Добавить swagger
--❇️0❇️ Написать celery scheduled task для обновления age у people, если прошло день рождени (пунк не выполнен)
+
+-❇️❇️ Написать celery scheduled task для обновления age у people, если прошло день рождени (пунк не выполнен)
+
 ❇️❇️ Использовать docker и docker-compose
+
 ❇️❇️ Написать тесты (django tests / pytest)
+
 ❇️❇️❇️ Подрубить Github CI
