@@ -10,7 +10,7 @@
 - Docker: [Установить Docker](https://docs.docker.com/get-docker/)
 - Docker Compose: [Установить Docker Compose](https://docs.docker.com/compose/install/)
 
-❇️ При получении списка people использовать пагинацию
+❇️ При получении списка people использовать пагинацию \n
 
 ❇️ Добавить swagger
 
