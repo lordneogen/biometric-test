@@ -7,25 +7,41 @@ from rest_framework import status
 from rest_framework import generics
 from . import serializers
 from rest_framework.response import Response
+from django.core.paginator import Paginator, Page
 
 class list_cr_Persons(APIView):
     
     model=Persons
     queryset =  model.objects.all()
     serializer_class = serializers.SER_CR_Persons
-    
+    page_number=1
     
     def get_queryset(self):
         return self.queryset.all()
     
     def get(self, request, *args, **kwargs):
         
-        serializer = self.serializer_class(data=self.get_queryset(), many=True)
-
-        if serializer.is_valid() or len(self.get_queryset())==0 :
-            return Response({'error':'Нету персон'},status=404)
+        paginator = Paginator(self.queryset, 5)
         
-        return Response(serializer.data)
+        print(request)
+        
+        try:
+            self.page_number = int(request.GET.get('page'))
+    
+            if self.page_number==None:
+                self.page_number=1
+        except:
+            self.page_number=1
+            
+        if paginator.num_pages>=self.page_number and self.page_number>0:
+            page = paginator.page(self.page_number)
+            serializer = self.serializer_class(data=page, many=True)
+            if not serializer.is_valid():
+                return Response(serializer.data,status=200)
+            else:
+               return Response({"error":"Ошибка валидации"},status=500) 
+        else:
+            return Response({'error':'Нету персон'},status=404)
         
     def post(self, request, *args, **kwargs):
         
@@ -34,7 +50,7 @@ class list_cr_Persons(APIView):
         if serializer.is_valid():
             serializer.save()
             
-        return Response(serializer.data)
+        return Response(serializer.data,status=200)
     
 class rud_Persons(APIView):
     
@@ -67,7 +83,7 @@ class rud_Persons(APIView):
         if self.queryset==None:
             return Response({'error':'Нету персоны'},status=404)
         self.queryset.delete()
-        return Response({"result":"Персона удалена"},status=200)
+        return Response({"result":"Персона удалена"},status=204)
     
     def put(self, request, *args, **kwargs):
         

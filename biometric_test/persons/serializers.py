@@ -4,10 +4,10 @@ from .models import *
 class SER_CR_Persons(serializers.ModelSerializer):
     class Meta:
         model = Persons
-        fields = '__all__'
+        fields = ('iin','name','age')
     
     def validate(self, attrs):
-        if not attrs['iin'] or not attrs['name'] or not attrs['age']:
+        if not attrs['iin'] or not attrs['name']:
             raise serializers.ValidationError("Нет нужных данных")
         else:
             return super().validate(attrs)
@@ -15,7 +15,7 @@ class SER_CR_Persons(serializers.ModelSerializer):
 class SER_RUD_Persons(serializers.ModelSerializer):
     class Meta:
         model = Persons
-        fields ='__all__'
+        fields = ('iin','name','age')
         read_only_fields = ('iin','age')
     
     def validate(self, attrs):

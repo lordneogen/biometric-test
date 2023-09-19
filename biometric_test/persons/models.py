@@ -8,6 +8,8 @@ class Persons(models.Model):
     name = models.TextField(null=False)
     
     age = models.IntegerField(null=True)
+    
+    join_date=models.DateField(auto_now=True,null=False)
 
     def __str__(self):
         return str(self.iin)
